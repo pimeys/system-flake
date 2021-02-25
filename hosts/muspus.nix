@@ -7,6 +7,7 @@
       ../modules/common.nix
       ../modules/wayland.nix
       ../modules/home-services.nix
+      ../modules/laptop.nix
     ];
 
   boot = {
