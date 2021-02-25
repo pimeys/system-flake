@@ -1,9 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let
-  hass-token = import ../secret/hass-token.nix;
-  home-coords = import ../secret/home-coords.nix;
-in {
+{
   boot.kernelModules = [ "v4l2loopback" ];
 
   programs.sway = {
@@ -31,8 +28,8 @@ in {
       export QT_QPA_PLATFORM=wayland
       export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
       export HASS_SERVER="http://hass.local:8123";
-      export HASS_TOKEN=${hass-token};
-      export HOME_COORDS=${home-coords};
+      export HASS_TOKEN_FILE=${config.age.secrets.hass.path};
+      export HOME_COORDS_FILE=${config.age.secrets.hass.path};
     '';
   };
 

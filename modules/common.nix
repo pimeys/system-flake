@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   # Use the systemd-boot EFI boot loader.
@@ -21,6 +21,22 @@
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+  };
+
+  age = {
+    secrets = {
+      hass = {
+        file = ../secrets/hass.age;
+        owner = "pimeys";
+      };
+      home-coords = {
+        file = ../secrets/home-coords.age;
+        owner = "pimeys";
+      };
+    };
+    sshKeyPaths = [
+      "/home/pimeys/.ssh/id_ed25519"
+    ];
   };
 
   # Set your time zone.
@@ -147,6 +163,7 @@
      bc
      speedcrunch
      starship
+     agenix.defaultPackage.x86_64-linux
   ];
 
   environment.pathsToLink = [ "/libexec" ];
