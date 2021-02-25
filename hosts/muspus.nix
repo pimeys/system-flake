@@ -2,19 +2,13 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
+      ../modules/common.nix
+      ../modules/wayland.nix
     ];
 
   boot = {
-    loader = {
-      systemd-boot.enable = true;
-      grub.copyKernels = true;
-      efi.canTouchEfiVariables = true;
-    };
-
-    kernelPackages = pkgs.linuxPackages_latest;
-    supportedFilesystems = [ "zfs" ];
-
     initrd = {
       availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
       kernelModules = [ ];
