@@ -6,6 +6,7 @@
       (modulesPath + "/installer/scan/not-detected.nix")
       ../modules/common.nix
       ../modules/wayland.nix
+      ../modules/home-services.nix
     ];
 
   boot = {
