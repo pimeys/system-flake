@@ -25,12 +25,8 @@
 
   age = {
     secrets = {
-      hass = {
-        file = ../secrets/hass.age;
-        owner = "pimeys";
-      };
-      home-coords = {
-        file = ../secrets/home-coords.age;
+      env = {
+        file = ../secrets/env.age;
         owner = "pimeys";
       };
     };

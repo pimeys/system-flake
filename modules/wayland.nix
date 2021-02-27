@@ -28,8 +28,7 @@
       export QT_QPA_PLATFORM=wayland
       export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
       export HASS_SERVER="http://hass.local:8123";
-      export HASS_TOKEN_FILE=${config.age.secrets.hass.path};
-      export HOME_COORDS_FILE=${config.age.secrets.hass.path};
+      source ${config.age.secrets.env.path};
     '';
   };
 

@@ -3,6 +3,5 @@ let
   users = [ user1 ];
 in
 {
-  "hass.age".publicKeys = users;
-  "home-coords.age".publicKeys = users;
+  "env.age".publicKeys = users;
 }
