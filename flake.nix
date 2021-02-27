@@ -8,16 +8,21 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-doom-emacs.url = "github:vlaci/nix-doom-emacs";
+    doom-emacs.url = "github:vlaci/nix-doom-emacs";
+    doom-emacs.inputs.emacs-overlay.follows = "emacs-overlay";
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
   };
 
-  outputs = {
+  outputs = inputs @ {
     self
     , nixpkgs
     , agenix
     , home-manager
-    , nix-doom-emacs
-  }: {
+    , doom-emacs
+    , ...
+  }: let
+    inherit (nixpkgs) lib;
+  in {
     nixosConfigurations.muspus = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules =
@@ -28,7 +33,12 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.pimeys = import ./home.nix;
+            home-manager.users.pimeys = lib.mkMerge [
+              {
+                imports = [ doom-emacs.hmModule ];
+              }
+              ./home.nix
+            ];
           }
         ];
     };

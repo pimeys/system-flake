@@ -1,7 +1,6 @@
-{ pkgs, nix-doom-emacs, ... }:
+{ pkgs, inputs, ... }:
 
 {
-  imports = [ nix-doom-emacs.hmModule ];
   home = {
     sessionVariables = {
       MOZ_ENABLE_WAYLAND = 1;
