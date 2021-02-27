@@ -22,25 +22,29 @@
     , ...
   }: let
     inherit (nixpkgs) lib;
+    system = "x86_64-linux";
+    common-modules = [
+      agenix.nixosModules.age
+      home-manager.nixosModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.users.pimeys = lib.mkMerge [
+          {
+            imports = [ doom-emacs.hmModule ];
+          }
+          ./home.nix
+        ];
+      }
+    ];
   in {
     nixosConfigurations.muspus = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules =
-        [
-          ./hosts/muspus.nix
-          agenix.nixosModules.age
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.pimeys = lib.mkMerge [
-              {
-                imports = [ doom-emacs.hmModule ];
-              }
-              ./home.nix
-            ];
-          }
-        ];
+      system = system;
+      modules = [ ./hosts/muspus.nix ] ++ common-modules;
+    };
+    nixosConfigurations.naunau = nixpkgs.lib.nixosSystem {
+      system = system;
+      modules = [ ./hosts/naunau.nix ] ++ common-modules;
     };
   };
 }
